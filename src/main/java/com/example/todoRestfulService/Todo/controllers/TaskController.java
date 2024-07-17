@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -41,9 +42,9 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse> createTask(@RequestBody Task task) {
-        Task createdTask = taskService.createTask(task);
-        ApiResponse apiResponse = new ApiResponse("Task Created Successfully", HttpStatus.CREATED.value());
+    public ResponseEntity<ApiResponse> createTask(@RequestBody Map<String, Object> taskMap) {
+        Task createdTask = taskService.createTask(taskMap);
+        ApiResponse apiResponse = new ApiResponse("Task Created Successfully", HttpStatus.CREATED.value(), createdTask);
         return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
 
@@ -61,10 +62,10 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateTask(@PathVariable Long id, @RequestBody Task taskDetails){
+    public ResponseEntity<ApiResponse> updateTask(@PathVariable Long id, @RequestBody Map<String, Object> taskDetailsMap){
         Optional<Task> optionalTask = taskService.findById(id);
         if(optionalTask.isPresent()) {
-            taskService.updateTask(id, taskDetails);
+            taskService.updateTask(id, taskDetailsMap);
             ApiResponse apiResponse = new ApiResponse("Task updated successfully", HttpStatus.OK.value());
             return new ResponseEntity<>(apiResponse, HttpStatus.OK);
         }else{

@@ -1,9 +1,7 @@
 package com.example.todoRestfulService.Todo.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -23,11 +21,16 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_list_id", nullable = true)
+    @JsonIgnore
+    private TaskList taskList;
+
     public Task() {
     }
 
 
-    public Task(Long id, String title, String description, LocalDateTime dueDate, LocalDateTime reminder, boolean isRecurring, String recurrencePattern, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Task(Long id, String title, String description, LocalDateTime dueDate, LocalDateTime reminder, boolean isRecurring, String recurrencePattern, LocalDateTime createdAt, LocalDateTime updatedAt, TaskList taskList) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -37,6 +40,7 @@ public class Task {
         this.recurrencePattern = recurrencePattern;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.taskList = taskList;
     }
 
     public Long getId() {
@@ -109,5 +113,37 @@ public class Task {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isRecurring() {
+        return isRecurring;
+    }
+
+    public void setRecurring(boolean recurring) {
+        isRecurring = recurring;
+    }
+
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(TaskList taskList) {
+        this.taskList = taskList;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", dueDate=" + dueDate +
+                ", reminder=" + reminder +
+                ", isRecurring=" + isRecurring +
+                ", recurrencePattern='" + recurrencePattern + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", taskList=" + taskList +
+                '}';
     }
 }
