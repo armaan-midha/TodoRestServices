@@ -45,7 +45,7 @@ public class TaskListController {
     @PostMapping
     public ResponseEntity<ApiResponse> createTaskList(@RequestBody TaskList taskList) {
         TaskList createdTaskList = taskListService.createTask(taskList);
-        ApiResponse apiResponse = new ApiResponse("Task Created Successfully", HttpStatus.CREATED.value());
+        ApiResponse apiResponse = new ApiResponse("Task List Created Successfully", HttpStatus.CREATED.value());
         return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
 
@@ -54,10 +54,10 @@ public class TaskListController {
         Optional<TaskList> taskList = taskListService.findById(id);
         if(taskList.isPresent()){
             taskListService.deleteTask(taskList.get().getId());
-            ApiResponse apiResponse = new ApiResponse("Task Deleted Successfully", HttpStatus.NO_CONTENT.value());
+            ApiResponse apiResponse = new ApiResponse("Task List Deleted Successfully", HttpStatus.NO_CONTENT.value());
             return new ResponseEntity<>(apiResponse, HttpStatus.NO_CONTENT);
         } else{
-            ApiResponse response = new ApiResponse("Task not found", HttpStatus.NOT_FOUND.value());
+            ApiResponse response = new ApiResponse("Task List not found", HttpStatus.NOT_FOUND.value());
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
@@ -67,10 +67,10 @@ public class TaskListController {
         Optional<TaskList> optionalTaskList = taskListService.findById(id);
         if(optionalTaskList.isPresent()) {
             taskListService.updateTaskList(id, taskListDetails);
-            ApiResponse apiResponse = new ApiResponse("Task updated successfully", HttpStatus.OK.value());
+            ApiResponse apiResponse = new ApiResponse("Task List updated successfully", HttpStatus.OK.value());
             return new ResponseEntity<>(apiResponse, HttpStatus.OK);
         }else{
-            ApiResponse apiResponse = new ApiResponse("Task is not present", HttpStatus.BAD_REQUEST.value());
+            ApiResponse apiResponse = new ApiResponse("Task List is not present", HttpStatus.BAD_REQUEST.value());
             return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
         }
     }
