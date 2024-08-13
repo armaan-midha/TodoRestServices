@@ -24,9 +24,16 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
-        List<Task> tasks = taskService.findAll();
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    public ResponseEntity<ApiResponse> getAllTasks(@RequestParam(value = "taskListId", required = false) Long taskListId) {
+        List<Task> tasks;
+        if (taskListId == null) {
+            ApiResponse apiResponse = new ApiResponse("No tasks found", HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+        } else {
+            tasks = taskService.findByTaskListId(taskListId);
+        }
+        ApiResponse apiResponse = new ApiResponse("Task is present", HttpStatus.OK.value(), tasks);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

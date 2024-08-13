@@ -24,8 +24,8 @@ public class Task {
 
     @Column(nullable = false)
     private  boolean isDone = false;
-    private boolean isRecurring;
-    private String recurrencePattern;
+    private boolean isImportant;
+    private LocalDateTime recurrencePattern;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
@@ -44,13 +44,13 @@ public class Task {
     }
 
 
-    public Task(Long id, String title, String description, LocalDateTime dueDate, LocalDateTime reminder, boolean isRecurring, String recurrencePattern, LocalDateTime createdAt, LocalDateTime updatedAt, TaskList taskList, boolean isDone) {
+    public Task(Long id, String title, String description, LocalDateTime dueDate, LocalDateTime reminder, boolean isImportant, LocalDateTime recurrencePattern, LocalDateTime createdAt, LocalDateTime updatedAt, TaskList taskList, boolean isDone) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.reminder = reminder;
-        this.isRecurring = isRecurring;
+        this.isImportant = isImportant;
         this.recurrencePattern = recurrencePattern;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -98,19 +98,11 @@ public class Task {
         this.reminder = reminder;
     }
 
-    public boolean getIsRecurring() {
-        return isRecurring;
-    }
-
-    public void setIsRecurring(boolean recurring) {
-        isRecurring = recurring;
-    }
-
-    public String getRecurrencePattern() {
+    public LocalDateTime getRecurrencePattern() {
         return recurrencePattern;
     }
 
-    public void setRecurrencePattern(String recurrencePattern) {
+    public void setRecurrencePattern(LocalDateTime recurrencePattern) {
         this.recurrencePattern = recurrencePattern;
     }
 
@@ -122,12 +114,12 @@ public class Task {
         return updatedAt;
     }
 
-    public boolean isRecurring() {
-        return isRecurring;
+    public boolean isImportant() {
+        return isImportant;
     }
 
-    public void setRecurring(boolean recurring) {
-        isRecurring = recurring;
+    public void setImportant(boolean important) {
+        isImportant = important;
     }
 
     public TaskList getTaskList() {
@@ -155,7 +147,7 @@ public class Task {
                 ", dueDate=" + dueDate +
                 ", reminder=" + reminder +
                 ", isDone=" + isDone +
-                ", isRecurring=" + isRecurring +
+                ", isRecurring=" + isImportant +
                 ", recurrencePattern='" + recurrencePattern + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
